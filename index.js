@@ -45,6 +45,11 @@ const run = async () => {
       const result = await companiesCollection.insertOne(company);
       res.send(result);
     });
+    app.get("/companies", async (req, res) => {
+      const query = {}
+      const result = await companiesCollection.find(query).toArray();
+      res.send(result);
+    });
 
     app.get('/posts', async(req, res) => {
         const query = {}
