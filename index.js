@@ -25,7 +25,7 @@ const run = async () => {
     const usersCollection = client.db("Work-Finder").collection("users");
     const companiesCollection = client.db('Work-Finder').collection('companies')
     const postsCollection = client.db("Work-Finder").collection("posts");
-    const applyingCollection = client.db('Work-finder').collection('applying')
+    const applyingCollection = client.db('Work-Finder').collection('applying')
 
     app.post("/user", async (req, res) => {
       const user = req.body;
@@ -61,6 +61,13 @@ const run = async () => {
     app.post('/applying', async(req, res)=>{
         const bookedJob = req.body
         const result = await applyingCollection.insertOne(bookedJob)
+        res.send(result)
+    })
+
+    app.get('/applied', async(req, res)=>{
+        const email = req.query.email
+        const query = {appliedBy: email}
+        const result = await applyingCollection.find(query).toArray()
         res.send(result)
     })
   } catch {}
